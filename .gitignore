@@ -5,6 +5,12 @@ __pycache__/
 # C extensions
 *.so
 
+#git
+.gitignore
+
+# pycharm
+.idea
+
 # Distribution / packaging
 .Python
 env/
