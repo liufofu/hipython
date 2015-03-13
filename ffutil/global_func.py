@@ -104,15 +104,37 @@ def sendmail(serverip,serverport,fromuser,frompassword,touser,msgtext):
         print e
         return False
        
+def getpath():
+    str=os.path.split(os.path.realpath(__file__))
+    str=os.path.split(str[0])
+    return str[0]+'/'
 
+def getmacaddr():
+    import uuid
+    node=uuid.getnode()
+    mac=uuid.UUID(int=node).hex[-12:]
+    return mac
 
+def getpathsize(srcpath):
+    result={'result':None,'message':None}
+    totalsize=0
+    if not os.path.exists(srcpath):
+        result['result']='fail'
+        result['message']='目录不存在，请核实'
+    if os.path.isfile(srcpath):
+        totalsize=os.path.getsize(srcpath)
+        result['result']='success'
+        result['message']=totalsize
+    elif os.path.isdir(srcpath):
+        pass
+    return result
 
 if __name__=='__main__':
 #    print getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","database","dbuser")
-    logformat=getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","format").replace('@','%')
-    loglevel=int(getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","level"))
-    logbackupcount=int(getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","backupcount"))
-    logmaxbytes=int(getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","maxbytes"))
+#     logformat=getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","format").replace('@','%')
+#     loglevel=int(getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","level"))
+#     logbackupcount=int(getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","backupcount"))
+#     logmaxbytes=int(getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","maxbytes"))
 
 #    print logformat
 #    print loglevel
@@ -153,14 +175,17 @@ if __name__=='__main__':
     print "liufofu".split("f")
     print "liufofu".count("f")
 
-    serverip=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpip")
-    serverport=int(getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpport"))
-    fromuser=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpuser")
-    frompassword=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtppassword")
-    touser="18960826681@189.cn"
-    msgtext="Hello ,I am shenghuososo"
-    if sendmail(serverip,serverport,fromuser,frompassword,touser,msgtext):
-        print "Send Successfully~~"
-    else:
-        print "Send Failed~~"
+    # serverip=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpip")
+    # serverport=int(getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpport"))
+    # fromuser=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpuser")
+    # frompassword=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtppassword")
+    # touser="18960826681@189.cn"
+    # msgtext="Hello ,I am shenghuososo"
+    # if sendmail(serverip,serverport,fromuser,frompassword,touser,msgtext):
+    #     print "Send Successfully~~"
+    # else:
+    #     print "Send Failed~~"
+    print getpath()
+    print getmacaddr()
+    print getpathsize('/opt/liufofu/hipython/hipython.py')['message']
 
