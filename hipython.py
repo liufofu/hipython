@@ -11,3 +11,12 @@ print mkrndpasswd()
 print getpath()
 
 print __file__
+
+ipaddr='%192.168.181.15'
+if ipaddr.startswith('%'):
+    print "x"
+elif ipaddr.startswith('1'):
+    print 'y'
+
+else:
+    print 'z'
