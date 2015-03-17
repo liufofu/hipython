@@ -14,7 +14,7 @@ import os,time,sys,random
 import ConfigParser
 import logging.config
 from logging.handlers import RotatingFileHandler
-import string,smtplib
+import string,smtplib,hashlib
 
 def getconfig(filepath,section,key):
     cfg=ConfigParser.ConfigParser()
@@ -129,6 +129,47 @@ def getpathsize(srcpath):
         pass
     return result
 
+def md5str(s):
+    '''
+    计算字符串的md5值,传入相应需要计算的字符串
+    :param s:
+    :return:
+    '''
+    try:
+        m=hashlib.md5()
+        m.update(s)
+        return m.hexdigest()
+    except Exception,ex:
+        print "Error:"+str(ex)
+        return None
+
+def md5file(filepath):
+    '''
+    计算文件的md5指,传入相应需要计算的文件
+    :param filepath:
+    :return:
+    '''
+    try:
+        with open(filepath,'rb') as f:
+            m=hashlib.md5()
+            m.update(f.read())
+            return m.hexdigest()
+    except Exception,ex:
+        print "Error:"+str(ex)
+        return None
+
+def scandir(dirpath):
+    dirlist=[]
+    if not os.path.exists(dirpath):
+        return '%s not exists.' %(dirpath)
+    for root,dirs,files in os.walk(dirpath):
+        for file in files:
+            # print os.path.join(root,file)
+            dirlist.append(os.path.join(root,file))
+
+    return dirlist
+
+
 if __name__=='__main__':
 #    print getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","database","dbuser")
 #     logformat=getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","format").replace('@','%')
@@ -175,6 +216,8 @@ if __name__=='__main__':
     print "liufofu".split("f")
     print "liufofu".count("f")
 
+    print md5file('/root/install.log')
+
     # serverip=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpip")
     # serverport=int(getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpport"))
     # fromuser=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpuser")
@@ -188,4 +231,5 @@ if __name__=='__main__':
     print getpath()
     print getmacaddr()
     print getpathsize('/opt/liufofu/hipython/hipython.py')['message']
+    print scandir('/opt/liufofu/hipython')
 
