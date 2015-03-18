@@ -10,7 +10,7 @@
 ####################################
 """
 
-import os,time,sys,random
+import os,time,sys,random,json
 import ConfigParser
 import logging.config
 from logging.handlers import RotatingFileHandler
@@ -169,6 +169,17 @@ def scandir(dirpath):
 
     return dirlist
 
+
+def strtojson(jstr):
+    '''
+    字符串转字典
+    :param jstr:
+    :return:
+    JSON字符串中，不能包含单引号，而必须是双引号
+    '''
+    s= json.loads(jstr.replace("'",'"'))
+
+    return s
 
 if __name__=='__main__':
 #    print getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","database","dbuser")
