@@ -2,6 +2,7 @@
 
 from ffutil.global_func import mkrndpasswd
 from ffutil.global_func import getpath
+import string
 import time
 print "Hi,Python."
 print "Hello,Man."
@@ -9,6 +10,7 @@ print "Hello,Man."
 print "I am liuff"
 
 print mkrndpasswd()
+print mkrndpasswd(string.digits,4)
 print getpath()
 
 print __file__
@@ -30,3 +32,8 @@ print end-start
 print time.ctime()
 print time.localtime()
 print time.mktime(time.localtime())
+
+if 1:
+    print '1'
+if 0:
+    print '0'

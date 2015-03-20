@@ -211,7 +211,7 @@ if __name__=='__main__':
     print mkrndpasswd(rndlist)
     print mkrndpasswd(string.uppercase,10)
     print mkrndpasswd(string.lowercase)
-    print mkrndpasswd(string.digits)
+    print mkrndpasswd(string.digits,4)
     print mkrndpasswd(string.punctuation)
     print mkrndpasswd('liufofutiger123567',6)
 #
