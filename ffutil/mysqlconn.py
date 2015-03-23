@@ -61,7 +61,7 @@ class mysqldb:
             sys.exit()
 
     def query(self,sqlstr,mode=STORE_RESULT_MODE):
-        if self.conn==Node or self.conn.open==False:
+        if self.conn==None or self.conn.open==False:
             return -1
         self.conn.query(sqlstr)
         if mode==0:
