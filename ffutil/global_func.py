@@ -10,7 +10,7 @@
 ####################################
 """
 
-import os,time,sys,random,json
+import os,time,sys,random,json,socket
 import ConfigParser
 import logging.config
 from logging.handlers import RotatingFileHandler
@@ -181,6 +181,24 @@ def strtojson(jstr):
 
     return s
 
+def checkportopened(ipaddr,port):
+    result={'result':None,'message':None}
+    if ipaddr=='' or int(port)==0 or ipaddr is None:
+        result['result']='fail'
+        result['message']='ipaddr或port为空'
+    try:
+        sk=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        #设置超时时间
+        sk.settimeout(3)
+        sk.connect((ipaddr,port))
+        result['result']='success'
+        result['message']='连接服务器地址:%s,端口:%s成功' %(ipaddr,port)
+    except Exception,ex:
+        # print str(ex)
+        result['result']='fail'
+        result['message']='连接服务器地址:%s,端口:%s失败,错误信息:%s' %(ipaddr,port,str(ex))
+    return result
+
 if __name__=='__main__':
 #    print getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","database","dbuser")
 #     logformat=getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","format").replace('@','%')
@@ -228,6 +246,10 @@ if __name__=='__main__':
     print "liufofu".count("f")
 
     print md5file('/root/install.log')
+
+    result=checkportopened('172.24.133.5',32271)
+    print result['result']
+    print result['message']
 
     # serverip=getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpip")
     # serverport=int(getconfig("D:\\liufofu\\code\\python\\etc\\config.cfg","smtp","smtpport"))
