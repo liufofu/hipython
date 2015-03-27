@@ -199,6 +199,37 @@ def checkportopened(ipaddr,port):
         result['message']='连接服务器地址:%s,端口:%s失败,错误信息:%s' %(ipaddr,port,str(ex))
     return result
 
+def pssh(username,ipaddr,password,cmd,port=22):
+    try:
+        import pexpect
+    except ImportError ,ex:
+        print ex
+
+    ret=-1
+    ssh=pexpect.spawn(r'''ssh %s@%s -p %s "%s"''' %(username,ipaddr,port,cmd))
+    try:
+        i=ssh.expect(['password:','continue connecting (yes/no)?'],timeout=5)
+        if i==0:
+            ssh.sendline(password)
+        elif i==1:
+            ssh.sendline('yes\n')
+            ssh.expect('password: ')
+            ssh.sendline(password)
+        ssh.sendline(cmd)
+        r=ssh.read()
+        print r
+        ret=0
+    except pexpect.EOF:
+        print "EOF"
+        ssh.close()
+        ret=-1
+    except pexpect.TIMEOUT:
+        print "TIMEOUT"
+        ssh.close()
+        ret=-2
+    return ret
+
+
 if __name__=='__main__':
 #    print getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","database","dbuser")
 #     logformat=getconfig("D:\\liufofu\\code\\python\\etc\\db.conf","log","format").replace('@','%')
@@ -265,4 +296,6 @@ if __name__=='__main__':
     print getmacaddr()
     print getpathsize('/opt/liufofu/hipython/hipython.py')['message']
     print scandir('/opt/liufofu/hipython')
+
+    pssh('root','172.24.133.5','net(@_@)drgon.1009','hostname')
 
