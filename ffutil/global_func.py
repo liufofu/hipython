@@ -297,5 +297,5 @@ if __name__=='__main__':
     print getpathsize('/opt/liufofu/hipython/hipython.py')['message']
     print scandir('/opt/liufofu/hipython')
 
-    pssh('root','172.24.133.5','net(@_@)drgon.1009','hostname')
+    pssh('root','192.168.72.128','123456','hostname')
 
