@@ -6,7 +6,7 @@ from ffutil.ParseLog import ParseLog
 import os
 class TestParseLog(TestCase):
     def test_parselog(self):
-        '''
+        '''l
         sta.log
         -------------
         [2015-03-09 15:30:31] sta-000.bat dongfang 192.168.1.1
